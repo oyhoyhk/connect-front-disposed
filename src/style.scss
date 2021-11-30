@@ -1,0 +1,1351 @@
+@font-face {
+    font-family: 'Noto Sans CJK KR';
+    font-style: normal;
+    font-weight: normal;
+    src: url("./styles/fonts/NotoSansKR-Regular.woff2") format('woff2'),
+    url("./styles/fonts/NotoSansKR-Regular.woff") format('woff'),
+    url("./styles/fonts/NotoSansKR-Regular.otf") format('truetype')
+  }
+$c-color :#8991ff;
+$s-color :#b8d1ff;
+$b-color : #ebeeff;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#signIn {
+    width: 400px;
+    height: 350px;
+    border-radius: 20px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+        position: absolute;
+        font-size: 2.5rem;
+        font-weight: bold;
+        width: 50vw;
+        text-align: center;
+        left: 25%;
+        top: 20%;
+    }
+
+    #signInForm {
+        width: 350px;
+        height: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        input {
+            width: 100%;
+            height: 70px;
+            padding-left: 20px;
+            font-size: 1.3rem;
+            border-radius: 20px;
+            border: 1px solid gray
+        }
+
+        #signInButton {
+            margin-bottom: 20px;
+        }
+
+        #errorMessage {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            color: red;
+            padding-left: 15px;
+        }
+
+        .buttonContainer {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+
+            button {
+                width: 45%;
+                height: 100%;
+                outline: none;
+                background: white;
+                border-radius: 20px;
+                font-size: 1.3rem;
+                letter-spacing: 3px;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
+#signUp {
+    width: 450px;
+    height: 600px;
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+
+    .title {
+        position: absolute;
+        font-size: 2.5rem;
+        font-weight: bold;
+        width: 100vw;
+        text-align: center;
+        left: 0%;
+        top: 10%;
+        letter-spacing: 10px;
+        color: rgb(235, 235, 235);
+    }
+
+    .signUpContainer {
+        width: 380px;
+        height: 530px;
+        overflow: hidden;
+    }
+
+    .signUpOuterContainer {
+        width: 1920px;
+        height: 100%;
+        display: flex;
+        transition: .5s;
+
+        // 편의 상 transform
+        // transform: translateX(-480px);
+    }
+
+    .signUpInnerContainer {
+        width: 380px;
+        height: 100%;
+        margin-right: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .detail {
+            width: 100%;
+            font-size: .8rem;
+            color: gray;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .inputContainer {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+
+            input {
+                width: 90%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                padding-left: 10px;
+                font-size: 1.1rem;
+                border: none;
+                outline: none;
+                border-bottom: 1.5px solid gray;
+            }
+
+            input[type=button] {
+                background: none;
+                border: none;
+                border: 1px solid black;
+                border-radius: 12px;
+                letter-spacing: 3px;
+                cursor: pointer;
+            }
+
+            .checkbox {
+                width: 30px;
+                height: 30px;
+                background-size: 100% 100%;
+                position: relative;
+            }
+
+            .checkbox:hover .inputInfo {
+                bottom: -45px;
+                opacity: 1;
+            }
+
+            .inputInfo {
+                position: absolute;
+                bottom: -30px;
+                right: 0;
+                text-align: right;
+                width: 450px;
+                height: 30px;
+                color: red;
+                transition: .5s;
+                opacity: 0;
+            }
+        }
+
+        #signUpErrorMessage {
+            width: 90%;
+            margin: 0 auto;
+            height: 30px;
+            color: red;
+        }
+
+        .next {
+            width: 100%;
+            height: 60px;
+            border-radius: 12px;
+            background: none;
+            outline: none;
+            border: none;
+            border: 1px solid black;
+            margin-top: 30px;
+        }
+
+        #profilePreview {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+            border-radius: 50px;
+            background-size: 100% 100%;
+        }
+
+        #profileUpload {
+            display: none;
+        }
+
+        #profileUploadLabel {
+            width: 100%;
+            height: 60px;
+            border: 1px solid black;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            cursor: pointer;
+        }
+
+        .statusMessage {
+            width: 100%;
+            height: 60px;
+            border: 1px solid black;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-left: 15px;
+            font-size: 1.1rem;
+        }
+
+        .buttonBox {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .prev {
+                width: 45%;
+                height: 100%;
+                border-radius: 12px;
+                background: none;
+                outline: none;
+                border: none;
+                border: 1px solid black;
+            }
+
+            .next {
+                width: 45%;
+                height: 100%;
+                border-radius: 12px;
+                background: none;
+                outline: none;
+                border: none;
+                border: 1px solid black;
+                margin: 0;
+            }
+        }
+
+        .rcInfoContainer {
+            width: 100%;
+            height: 85%;
+            margin-bottom: 30px;
+
+            .rcCheck {
+                width: 100%;
+                height: 60px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid gray;
+
+                .rcToggle {
+                    width: 70px;
+                    border-radius: 30px;
+                    background: #eeeeee;
+                    height: 70%;
+                    position: relative;
+                    cursor: pointer;
+
+                    .rcButton {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 90%;
+                        background: rgb(255, 62, 62);
+                        position: absolute;
+                        top: calc(50% - 15px);
+                        left: 10%;
+                        transition: .5s;
+                        color: white;
+                        font-weight: bold;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: .8rem;
+                    }
+
+                    .checked {
+                        left: 50% !important;
+                        background: #528dfa !important;
+                    }
+                }
+            }
+
+            .rcTagContainer {
+                width: 100%;
+                height: 80%;
+                margin-top: 25px;
+                display: flex;
+                flex-direction: column;
+                position: relative;
+
+                .rcCover {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: 3px solid black;
+                    background: white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .rcCoverInfo {
+                        width: 80%;
+                        height: 60%;
+                        display: flex;
+                        justify-content: space-around;
+                        flex-direction: column;
+
+                    }
+                }
+
+                .rcTagText {
+                    width: 100%;
+                    height: 60px;
+                    border-bottom: 1px solid gray;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                #inputTag {
+                    width: 150px;
+                    height: 70%;
+                    border-radius: 15px;
+                    padding-left: 15px;
+                }
+
+                .rcTags {
+                    margin-top: 25px;
+                    width: 100%;
+                    max-Height: 80%;
+                    overflow: auto;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: flex-start;
+
+                    .tagContainer {
+                        border: 1px solid black;
+                        height: 35px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        border-radius: 15px;
+                        margin-bottom: 10px;
+                        margin-right: 10px;
+                        cursor: pointer;
+
+                        .tagDeleteButton {
+                            margin-left: 5px;
+                            width: 20px;
+                            height: 20px;
+                            background-image: url('./img/deleteButton.png');
+                            background-size: 100% 100%;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    #randomChatProfilePreview {
+        width: 380px;
+        height: 380px;
+        border-radius: 50px;
+        background-size: 100% 100%;
+    }
+
+    #randomChatProfileUpload {
+        display: none;
+    }
+
+    #randomChatProfileUploadLabel {
+        width: 100%;
+        height: 60px;
+        border: 1px solid black;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        cursor: pointer;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    .exit {
+        position: absolute;
+        width: 8%;
+        height: 50px;
+        bottom: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(209, 209, 209);
+        text-decoration: underline;
+        text-underline-position: under;
+        font-size: 1.1rem;
+        cursor: pointer;
+    }
+}
+
+#confirmBackground {
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, .5);
+
+    #confirmWindow {
+        position: absolute;
+        width: 300px;
+        height: 200px;
+        background: white;
+        border: 3px solid black;
+        border-radius: 20px;
+        left: calc(50% - 150px);
+        top: calc(50% - 250px);
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        align-items: center;
+
+        .buttonContainer {
+            width: 100%;
+            height: 20%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            button {
+                background: None;
+                outline: none;
+                border: 1px solid black;
+                width: 30%;
+                height: 100%;
+                border-radius: 12px;
+                cursor: pointer;
+            }
+        }
+    }
+
+}
+
+.mainPage {
+    width: 1000px;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .left {
+        width: 20%;
+        height: 100%;
+        position:relative;
+
+        .myProfile {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 100px;
+
+            .text {
+                width: 50%;
+                height: 30px;
+                text-align: center;
+                background: $c-color;
+                line-height: 30px;
+                border-radius: 12px;
+                color: white;
+            }
+
+            .myProfileImage {
+                width: 100%;
+                height: 200px;
+                border: 2px solid $c-color;
+                border-radius: 12px;
+            }
+        }
+
+        .randomProfile {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 100px;
+
+            .text {
+                width: 50%;
+                height: 30px;
+                text-align: center;
+                background: $c-color;
+                line-height: 30px;
+                border-radius: 12px;
+                color: white;
+            }
+
+            .randomProfileImage {
+                width: 100%;
+                height: 200px;
+                border: 2px solid $c-color;
+                border-radius: 12px;
+            }
+        }
+        .siteInfo{
+            position:absolute;
+            left:0;
+            bottom:10%;
+        }
+
+    }
+
+    .right {
+        width: 75%;
+        height: 100%;
+
+        .menus {
+            width: 100%;
+            height: 80px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+
+            .upper {
+                width: 80%;
+                height: 100%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+            .lower {
+                display: flex;
+                align-items:center;
+                position:relative;
+
+            }
+
+            .menu {
+                width: 70px;
+                height: 50px;
+                border: 2px solid $c-color;
+                border-radius: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: $c-color;
+                margin-right: 20px;
+                cursor: pointer;
+            }
+
+            .currentTab {
+                background: $c-color;
+                color: white;
+            }
+
+            .help {
+                width: 35px;
+                height: 35px;
+                background-image: url('./img/help.png');
+                background-size: 100% 100%;
+                cursor: pointer;
+                margin-right: 20px;
+            }
+            .notice {
+                width: 27px;
+                height: 27px;
+                background-image: url('./img/notice_off.png');
+                background-size: 100% 100%;
+                cursor: pointer;
+                margin-right: 20px;
+                position:relative;
+            }
+            .notice_on {
+                background-image: url('./img/notice_on.png');
+            }
+            .receivedAddFriendsCount{
+                color:white;
+                border-radius:100%;
+                background:red;
+                font-size:.7rem;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                font-weight:bold;
+                width:20px;
+                height:20px;
+                position:absolute;
+                right:-9px;
+                bottom:-9px;
+            }
+            .noticeContainer{
+                width:400px;
+                min-height:70px;
+                border:3px solid $c-color;
+                border-radius:12px;
+                position:absolute;
+                left:-125px;
+                top:50px;
+                background:white;
+                z-index:3;
+                display:flex;
+                flex-direction:column;
+                justify-content:center;
+                align-items:center;
+                font-size:1.1rem;
+                font-weight:bold;
+                color:#b8d1ff;
+                padding:10px 0 0 0 ;
+
+                .waiting{
+                    color:$c-color;
+                    width:90%;
+                    height:50px;
+                    border:3px solid $c-color;
+                    border-radius:12px;
+                    display:flex;
+                    justify-content:space-around;
+                    align-items:center;
+                    margin-bottom:10px;
+                    font-size:.9rem;
+                    .profileImage{
+                        width:40px;
+                        height:40px;
+                        border:2px solid $c-color;
+                        border-radius:12px;
+                        background-size:100% 100%;
+                    }
+                    .name{
+                        width:18%;
+                        border:1px solid black;
+                        margin-right:15px;
+                        height:90%;
+                        border:2px solid $c-color;
+                        border-radius:12px;
+                        font-size:.9rem;
+                        line-height:35px;
+                        display:flex;
+                        justify-content:center;
+                    background:$b-color;
+                    align-items:center;
+                    }
+                    .statusMessage{
+                        width:30%;
+                        margin-right:15px;
+                        border:2px solid $c-color;
+                        height:90%;
+                        border-radius:12px;
+                        line-height:35px;
+                        padding-left:5px;
+                    background:$b-color;
+                    font-size:.9rem;
+                    }
+                    .acceptButton{
+                        width:13%;
+                        height:70%;
+                        border-radius:12px;
+                        border:2px solid $c-color;
+                        background:#08e137;
+                        color:white;
+                        display:flex;
+                        justify-content:center;
+                        align-items:center;
+                        cursor:pointer;
+                    }
+                    .refuseButton{
+                        width:13%;
+                        height:70%;
+                        border-radius:12px;
+                        border:2px solid $c-color;
+                        background:#ff6565;
+                        color:white;
+                        display:flex;
+                        justify-content:center;
+                        align-items:center;
+                        cursor:pointer;
+                    }
+                }
+            }
+
+            .setting {
+                width: 35px;
+                height: 35px;
+                background-image: url('./img/setting.png');
+                background-size: 100% 100%;
+                cursor: pointer;
+                margin-right: 20px;
+            }
+
+            .logout {
+                width: 35px;
+                height: 35px;
+                background-image: url('./img/logout.png');
+                background-size: 100% 100%;
+                cursor: pointer;
+            }
+        }
+
+        .contents {
+            width: 100%;
+            height: 80%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            .contentsLeft {
+                width: 50%;
+                height: 90%;
+            }
+
+            .contentsRight {
+                width: 40%;
+                height: 90%;
+            }
+        }
+    }
+    .friendsList::-webkit-scrollbar{
+        width:2px;
+        background-color:$b-color;
+    }
+    .friendsList::-webkit-scrollbar-thumb{
+        width:2px;
+        background-color:$c-color;
+    }
+    .friendsList{
+        width: 400px;
+        border-radius:12px;
+        max-height:550px;
+        margin-bottom:10px;
+        overflow:auto;
+        .friend{
+            width:375px;
+            border:3px solid $c-color;
+            border-radius:10px;
+            height:60px;
+            margin-bottom:10px;
+            display:flex;
+            justify-content:space-around;
+            align-items:center;
+            color:$c-color;
+            .offline{
+                width:10px;
+                height:10px;
+                background:linear-gradient(-45deg, gray 60%, white);
+                border-radius:100%;
+            }
+            .online{
+                width:10px;
+                height:10px;
+                background:linear-gradient(-45deg, rgb(52, 212, 65) 60%, white);
+                border-radius:100%;
+            }
+            .profileImage{
+                width:45px;
+                height:45px;
+                background-size:100% 100%;
+                border-radius:12px;
+                border:2px solid $c-color;
+            }
+            .name{
+                width:80px;
+                height:80%;
+                border-radius:12px;
+                border: 2px solid $c-color;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+            }
+            .statusMessage{
+                width:150px;
+                height:80%;
+                border-radius:12px;
+                border:2px solid $c-color;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+            }
+            .chatButton{
+                width:50px;
+                height:60%;
+                border-radius:12px;
+                border:2px solid $c-color;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                background:$c-color;
+                color:white;
+                cursor:pointer;
+            }
+        }
+    }
+    .searchBox {
+        width: 100%;
+        height: 45px;
+        margin-bottom: 10px;
+
+        input {
+            width: 100%;
+            height: 100%;
+            padding-left: 20px;
+            border-radius: 12px;
+            outline: none;
+            border: 2px solid $c-color;
+            font-size: 1.05rem;
+            color: $c-color;
+        }
+
+        input[type=text]::placeholder {
+            color: $s-color;
+        }
+    }
+
+    .noList {
+        border: 3px solid $c-color;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 60px;
+        font-size: .95rem;
+        color: $s-color;
+
+        .addFriend {
+            width: 30px;
+            height: 30px;
+            background: url('./img/addButton.png');
+            background-size: 100% 100%;
+            cursor: pointer;
+        }
+    }
+
+    .randomChatContainer {
+        width: 100%;
+        height: 400px;
+
+        .randomChatSwitch {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border: 3px solid $c-color;
+            border-radius: 12px;
+        }
+
+        .text {
+            color: $c-color;
+            font-size: 1.15rem;
+            width: 40%;
+        }
+
+        .randomChatToggle {
+            width: 25%;
+            height: 70%;
+            border: 3px solid $c-color;
+            background: rgb(221, 226, 255);
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+
+            .randomChatButton {
+                width: 25px;
+                height: 25px;
+                border-radius: 8px;
+                background: #ff3e3e;
+                position: absolute;
+                left: 7%;
+                top: calc(50% - 13px);
+            }
+
+            .randomChatButton.clicked {
+                background: #6fce6f !important;
+                position: absolute;
+                left: 57% !important;
+                top: calc(50% - 13px);
+            }
+        }
+    }
+
+    .addFriendsBackground {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: rgba(0, 0, 0, .7);
+
+        .addFriends {
+            position: absolute;
+            border: 3px solid $c-color;
+            border-radius: 20px;
+            left: calc(50% - 400px);
+            top: 20%;
+            width: 400px;
+            min-height: 200px;
+            max-height: 600px;
+            background: white;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: $c-color;
+            transition: .5s;
+
+            .title {
+                height: 50px;
+                margin-top: 15px;
+            }
+
+            .inputBox {
+                width: 90%;
+                height: 50px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                input {
+                    width: 75%;
+                    height: 90%;
+                    padding-left: 12px;
+                    font-size: 1.1rem;
+                    outline: none;
+                    border: 2px solid $c-color;
+                    color: $c-color;
+                    border-radius: 12px;
+                }
+
+                input::placeholder {
+                    color: $s-color
+                }
+
+                button {
+                    width: 20%;
+                    height: 90%;
+                    outline: none;
+                    border: 3px solid $c-color;
+                    background: $b-color;
+                    border-radius: 12px;
+                    font-size: 1.05rem;
+                    color: $c-color;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                }
+            }
+
+            .messageBox {
+                width: 80%;
+                height: 30px;
+                font-size: .9rem;
+                color: red;
+            }
+
+            .target {
+                width: 90%;
+                height: 250px;
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: column;
+
+                .targetProfileImage {
+                    width: 120px;
+                    height: 120px;
+                    border: 2px solid $c-color;
+                    border-radius: 12px;
+                }
+
+                .below {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                    height: 80px;
+                    border-radius: 12px;
+                    padding: 5px 15px;
+
+                    .targetName {
+                        width: 30%;
+                        height: 70%;
+                        text-align: center;
+                        border: 2px solid $c-color;
+                        border-radius: 12px;
+                        font-size: 1.2rem;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .targetStatusMessage {
+                        width: 50%;
+                        height: 70%;
+                        font-size: .9rem;
+                        display: flex;
+                        padding-left: 10px;
+                        justify-content: flex-start;
+                        align-items: center;
+                        border: 2px solid $c-color;
+                        border-radius: 12px;
+                    }
+
+                    .addButton {
+                        width: 35px;
+                        height: 35px;
+                        background-image: url('./img/addButton.png');
+                        background-size: 100% 100%;
+                        cursor: pointer;
+                    }
+                }
+
+            }
+        }
+
+        .waiting {
+            position: absolute;
+            border: 3px solid $c-color;
+            border-radius: 20px;
+            left: calc(50% + 50px);
+            top: 20%;
+            width: 400px;
+            min-height: 200px;
+            max-height: 600px;
+            background: white;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: $c-color;
+            transition: .5s;
+            padding-bottom:15px;
+            .title {
+                margin:30px;
+            }
+            .waitingListContainer::-webkit-scrollbar{
+                width:2px;
+                background-color:$b-color;
+            }
+            .waitingListContainer::-webkit-scrollbar-thumb{
+                width:2px;
+                background-color:$c-color;
+            }
+            .waitingListContainer {
+                width:90%;
+                max-Height: 550px;
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: column;
+                align-items: flex-start;
+                padding-bottom:20px;
+                font-size:1rem;
+                overflow:auto;
+                .waitingList {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    border:2px solid $c-color;
+                    border-radius:12px;
+                    padding:0 10px;
+                    height: 50px;
+                    width:95%;
+                    margin-bottom:10px;
+                    .profileImage{
+                        width:40px;
+                        height:40px;
+                        border:1px solid $b-color;
+                        border-radius:12px;
+                        background-size:100% 100%;
+                        margin-right:15px;
+                    }
+                    .name{
+                        width:23%;
+                        border:1px solid black;
+                        margin-right:15px;
+                        height:90%;
+                        border:2px solid $b-color;
+                        border-radius:12px;
+                        font-size:.9rem;
+                        line-height:35px;
+                    }
+                    .statusMessage{
+                        width:45%;
+                        margin-right:15px;
+                        border:2px solid $b-color;
+                        height:90%;
+                        border-radius:12px;
+                        line-height:35px;
+                        padding-left:5px;
+                        font-size:.9rem;
+                    }
+                    .cancel{
+                        width:30px;
+                        height:30px;
+                        background:url('./img/deleteButton.png');
+                        background-size:100% 100%;
+                        cursor:pointer;
+                    }
+                }
+            }
+        }
+        .exitButton{
+            width:35px;
+            height:35px;
+            background:url('./img/exitButton.png');
+            background-size:100% 100%;
+            position:absolute;
+            top:20%;
+            cursor:pointer;
+            left:calc(50% + 20px);
+            // left:calc(50% + 480px);
+        }
+    }
+    .chatBackground{
+        width:100vw;
+        height:100vh;
+        position:absolute;
+        left:0;
+        top:0;
+        background:rgba(0,0,0,.5);
+        .chat{
+            font-family:'Noto Sans CJK KR', sans-serif;
+            width:400px;
+            height:600px;
+            border:5px solid $c-color;
+            border-radius:20px;
+            background:$b-color;
+            position:absolute;
+            left:calc(50% - 250px);
+            top:calc(50% - 350px);
+            overflow:hidden;
+            .chatInfo{
+                width:95%;
+                height:30px;
+                margin: 10px auto;
+                margin-bottom:20px;
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                .opposite{
+                    border-radius:8px;
+                    background:$c-color;
+                    width:70px;
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    color:white;
+                    height:100%;
+                }
+                .exit{
+                    width:70px;
+                    height:100%;
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    border:3px solid $c-color;
+                    border-radius:8px;
+                    color:$c-color;
+                    cursor:pointer;
+                }
+            }
+            .chatData::-webkit-scrollbar{
+                width:10px;
+            }
+            .chatData::-webkit-scrollbar-thumb{
+                background:#5a47ff;
+                border-radius:10px;
+            }
+            .chatData::-webkit-scrollbar-track{
+                background:#aaaaff;
+                border-radius:10px;
+            }
+            .chatData{
+                width:95%;
+                margin:10px auto;
+                max-height:75%;
+                overflow:auto;
+                .sendedMessageContainer{
+                    .sendedMessage{
+                        width:100%;
+                        display:flex;
+                        justify-content:flex-end;
+                        align-items:center;
+                        .message{
+                            background:#ffc977;
+                            padding:7px;
+                            border-radius:12px;
+                            max-width:50%;
+                        }
+                    }
+                    .sendedTime{
+                        font-size:.7rem;
+                        color:#a7a7be;
+                        font-weight:bold;
+                        text-align:right;
+                    }
+                }
+                
+                .receivedMessageContainer{
+                    height:60px;
+                    width:100%;
+                    .receivedMessage{
+                        width:100%;
+                        display:flex;
+                        justify-content:flex-start;
+                        align-items:center;
+                        .userIcon{
+                            width:40px;
+                            height:40px;
+                            border:2px solid $c-color;
+                            margin-right:5px;
+                            border-radius:12px;
+                            background-size:100% 100%;
+                        }
+                        .message{
+                            background:#b5b5ff;
+                            padding:7px;
+                            border-radius:12px;
+                            max-width:50%;
+                        }
+                    }
+                    .receivedTime{
+                        font-size:.7rem;
+                        color:#a7a7be;
+                        font-weight:bold;
+                    }
+                }
+                
+                
+            }
+            .inputBox{
+                width:100%;
+                min-height:60px;
+                max-height:50%;
+                background:$s-color;
+                position:absolute;
+                left:0;
+                bottom:0;
+                display:flex;
+                justify-content:space-around;
+                align-items:flex-start;
+                #msg{
+                    font-family:"Noto Sans CJK KR", sans-serif;
+                    margin:10px 0;
+                    overflow:hidden;
+                    border-radius:12px;
+                    width:80%;
+                    max-height:250px;
+                    min-height:40px;
+                    height:40px;
+                    outline:None;
+                    border:none;
+                    background:$b-color;
+                    border:2px solid $c-color;
+                    font-size:1.1rem;
+                    padding:5px;
+                    resize:none;
+                }
+                #send{
+                    font-family:"Noto Sans CJK KR", sans-serif;
+                    margin-top:12px;
+                    width:50px;
+                    height:38px;
+                    outline:none;
+                    border-radius:12px;
+                    background:none;
+                    border:3px solid $c-color;
+                    background:$b-color;
+                    color:$c-color;
+                    font-weight:bold;
+                    cursor:pointer;
+                }
+            }
+        }
+    }
+}
