@@ -27,16 +27,14 @@ const SendedMessage = ({ msg, time, getTime }) => {
 const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => {
 	console.log('newMessage', newMessage);
 	const inputBox = useRef();
+	const inputContainer = useRef();
 	const chatContainer = useRef();
 	const [inputLines, setLines] = useState(0);
 	const [beforeLine, setBeforeLine] = useState([0]);
 	const [logs, setLogs] = useState(null);
+	const logsRef = useRef(logs);
+	const [send, setSend] = useState(false);
 	useEffect(() => {
-		console.log(socket);
-		console.log(chat);
-		socket.on('received_msg', (sender, msg) => {
-			setLogs([...logs, { sender: sender, receiver: Number(sessionStorage.uid), msg, time: new Date().toString() }]);
-		});
 		setLines(inputBox.current.scrollHeight);
 		console.log(sessionStorage.uid, chat.otherPerson.uid);
 		axios
@@ -44,21 +42,22 @@ const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => 
 			.then(res => {
 				console.log(res.data);
 				setLogs([...res.data]);
-				adjustChatContainer();
+				logsRef.current = adjustChatContainer();
 			})
 			.catch(err => {
 				console.error(err);
 			});
-		console.log(newMessage);
-
-		if (newMessage) {
-			setLogs([
-				...logs,
-				{ sender: chat.otherPerson.uid, receiver: Number(sessionStorage.uid), msg: newMessage, time: new Date().toString() },
-			]);
-			setNewMessage(null);
-		}
-	}, [newMessage]);
+		socket.on('received_msg', (sender, msg) => {
+			new Promise((resolve, reject) => {
+				setLogs(logs => {
+					return [...logs, { sender: sender, receiver: Number(sessionStorage.uid), msg, time: new Date().toString() }];
+				});
+				resolve();
+			}).then(() => {
+				adjustChatContainer();
+			});
+		});
+	}, []);
 	const getTime = date => {
 		const h = date.getHours();
 		let str = h >= 12 ? '오후' : '오전';
@@ -90,14 +89,38 @@ const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => 
 	};
 	const sendMessage = () => {
 		const msg = inputBox.current.value;
+		if (msg === '') return;
 		inputBox.current.value = '';
 		socket.emit('send_message', msg, sessionStorage.uid, chat.otherPerson.uid);
 		new Promise((resolve, reject) => {
-			setLogs([...logs, { sender: Number(sessionStorage.uid), receiver: chat.otherPerson.uid, msg, time: new Date().toString() }]);
+			setLogs(logs => {
+				return [...logs, { sender: Number(sessionStorage.uid), receiver: chat.otherPerson.uid, msg, time: new Date().toString() }];
+			});
 			resolve();
-		}).then(res => {
+		}).then(() => {
 			adjustChatContainer();
 		});
+	};
+	const handleEnter = e => {
+		if (e.key === 'Enter') {
+			const msg = inputBox.current.value;
+			if (msg === '') return;
+			inputBox.current.value = '';
+			socket.emit('send_message', msg, sessionStorage.uid, chat.otherPerson.uid);
+			new Promise((resolve, reject) => {
+				setLogs(logs => {
+					return [
+						...logs,
+						{ sender: Number(sessionStorage.uid), receiver: chat.otherPerson.uid, msg, time: new Date().toString() },
+					];
+				});
+				resolve();
+			}).then(() => {
+				adjustChatContainer();
+				inputBox.current.style.height = '40px';
+				inputContainer.current.style.height = '60px';
+			});
+		}
 	};
 	return (
 		<div className="chatBackground">
@@ -134,7 +157,7 @@ const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => 
 						<div className="loading">로딩 중</div>
 					)}
 				</div>
-				<div className="inputBox">
+				<div className="inputBox" ref={inputContainer}>
 					{/*textarea 최대 33글자 */}
 					<textarea
 						ref={inputBox}
@@ -144,6 +167,7 @@ const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => 
 						id="msg"
 						maxLength="125"
 						placeholder="메시지를 입력해주세요"
+						onKeyUp={handleEnter}
 					/>
 					<button id="send" onClick={sendMessage}>
 						전송
