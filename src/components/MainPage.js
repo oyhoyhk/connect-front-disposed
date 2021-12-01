@@ -36,6 +36,7 @@ const MainPage = ({ SERVER }) => {
 		otherPerson: null,
 	});
 	const socket = socketio.connect(SERVER);
+	const socketRef = useRef(socket);
 	useEffect(() => {
 		// axios.get(SERVER + '/login/' + sessionStorage.uid).then(res => {
 		// 	console.log(res.data);
@@ -117,10 +118,9 @@ const MainPage = ({ SERVER }) => {
 		});
 
 		socket.on('received_msg', (sender, msg) => {
-			console.log(msg);
+			console.log('in MainPage socekt received_msg');
 			if (chat.active && chat.otherPerson.uid === Number(sender)) {
-				console.log(msg);
-				setNewMessage(msg);
+				return;
 			}
 		});
 		return () => {
@@ -282,7 +282,7 @@ const MainPage = ({ SERVER }) => {
 					newMessage={newMessage}
 					setNewMessage={setNewMessage}
 					SERVER={SERVER}
-					socket={socket}
+					socket={socketRef.current}
 					chat={chat}
 					openChat={openChat}
 				/>

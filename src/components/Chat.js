@@ -25,12 +25,18 @@ const SendedMessage = ({ msg, time, getTime }) => {
 };
 
 const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => {
+	console.log('newMessage', newMessage);
 	const inputBox = useRef();
 	const chatContainer = useRef();
 	const [inputLines, setLines] = useState(0);
 	const [beforeLine, setBeforeLine] = useState([0]);
 	const [logs, setLogs] = useState(null);
 	useEffect(() => {
+		console.log(socket);
+		console.log(chat);
+		socket.on('received_msg', (sender, msg) => {
+			setLogs([...logs, { sender: sender, receiver: Number(sessionStorage.uid), msg, time: new Date().toString() }]);
+		});
 		setLines(inputBox.current.scrollHeight);
 		console.log(sessionStorage.uid, chat.otherPerson.uid);
 		axios
@@ -86,8 +92,12 @@ const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => 
 		const msg = inputBox.current.value;
 		inputBox.current.value = '';
 		socket.emit('send_message', msg, sessionStorage.uid, chat.otherPerson.uid);
-		setLogs([...logs, { sender: Number(sessionStorage.uid), receiver: chat.otherPerson.uid, msg, time: new Date().toString() }]);
-		adjustChatContainer();
+		new Promise((resolve, reject) => {
+			setLogs([...logs, { sender: Number(sessionStorage.uid), receiver: chat.otherPerson.uid, msg, time: new Date().toString() }]);
+			resolve();
+		}).then(res => {
+			adjustChatContainer();
+		});
 	};
 	return (
 		<div className="chatBackground">
