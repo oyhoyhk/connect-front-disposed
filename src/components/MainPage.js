@@ -9,6 +9,10 @@ import SearchBox from './SearchBox';
 import Notice from './Notice';
 import FriendsList from './FriendsList';
 import Chat from './Chat';
+import ChatList from './ChatList';
+import TagContainer from './TagContainer';
+import EditTags from './EditTags';
+import RandomChattingLists from './RandomChattingLists';
 
 const MainPage = ({ SERVER }) => {
 	const [tab, setTab] = useState('friend');
@@ -26,11 +30,11 @@ const MainPage = ({ SERVER }) => {
 		tags: null,
 		useRandomChatting: null,
 	});
-	const [newMessage, setNewMessage] = useState(null);
 	const userInfoRef = useRef(userInfo);
 	const [addFriends, openAddFriends] = useState(false);
 	const [connectedUsers, setConnectedUsers] = useState(0);
 	const [noticeToggle, openNotice] = useState(false);
+	const [editTags, openEditTags] = useState(false);
 	const [chat, setChat] = useState({
 		active: false,
 		otherPerson: null,
@@ -58,6 +62,7 @@ const MainPage = ({ SERVER }) => {
 		// socket.on('logout', users => {
 		// 	setConnectedUsers(users);
 		// });
+
 		socket.on('canceled_add_friend', result => {
 			console.log('when socket.on canceled_add_friend', result);
 			console.log(userInfoRef.current);
@@ -66,6 +71,9 @@ const MainPage = ({ SERVER }) => {
 				...userInfoRef.current,
 				receivedAddFriends: result,
 			});
+		});
+		socket.on('update_msg', result => {
+			console.log('socket on update_msg', result);
 		});
 		socket.on('receive_add_friend', result => {
 			console.log('when received add friend', userInfoRef.current);
@@ -129,7 +137,13 @@ const MainPage = ({ SERVER }) => {
 			socket.disconnect();
 		};
 	}, []);
-
+	const switchTab = () => {
+		if (tab === 'friend') {
+			setTab('chatting');
+		} else {
+			setTab('friend');
+		}
+	};
 	const toggleRandomChatting = () => {
 		setUserInfo({
 			...userInfoRef.current,
@@ -140,10 +154,22 @@ const MainPage = ({ SERVER }) => {
 			useRandomChatting: userInfo.useRandomChatting === 1 ? 0 : 1,
 		});
 	};
+	const updateTags = tags => {
+		setUserInfo({
+			...userInfo,
+			tags,
+		});
+	};
 	const setAddFriendsList = data => {
 		setUserInfo({
 			...userInfoRef.current,
 			addFriends: data,
+		});
+	};
+	const setRecentChatList = data => {
+		setUserInfo({
+			...userInfo,
+			chatList: [...data],
 		});
 	};
 	const toggleNotice = () => {
@@ -188,9 +214,7 @@ const MainPage = ({ SERVER }) => {
 							className="randomProfileImage"
 							style={{
 								backgroundImage: `url(${
-									userInfo.randomProfileImage !== 'null'
-										? SERVER + '/' + userInfo.randomProfileImage
-										: defaultProfileImage
+									userInfo.randomProfileImage !== null ? SERVER + '/' + userInfo.randomProfileImage : defaultProfileImage
 								})`,
 								backgroundSize: '100% 100%',
 							}}
@@ -204,10 +228,13 @@ const MainPage = ({ SERVER }) => {
 			<div className="right">
 				<div className="menus">
 					<div className="upper">
-						<div onClick={() => console.log(userInfo)} className={`menu ${tab === 'friend' ? 'currentTab' : ''}`}>
+						<div onClick={switchTab} className={`menu ${tab === 'friend' ? 'currentTab' : ''}`}>
 							친 구
 						</div>
-						<div className={`menu ${tab === 'chat' ? 'currentTab' : ''}`}> 채 팅 </div>
+						<div onClick={switchTab} className={`menu ${tab === 'chatting' ? 'currentTab' : ''}`}>
+							{' '}
+							채 팅{' '}
+						</div>
 					</div>
 					<div className="lower">
 						<div className="help"> </div>
@@ -239,21 +266,32 @@ const MainPage = ({ SERVER }) => {
 					</div>
 				</div>
 				<div className="contents">
-					<div className="contentsLeft">
-						<SearchBox />
-						{userInfo.friendsList && userInfo.friendsList.length !== 0 ? (
-							<FriendsList openChat={openChat} SERVER={SERVER} userInfo={userInfo} />
-						) : (
-							''
-						)}
-						<NoList
-							SERVER={SERVER}
-							userInfo={userInfo}
-							setUserInfo={setUserInfo}
-							openAddFriends={openAddFriends}
-							closeNotice={openNotice}
-						/>
-					</div>
+					{tab === 'friend' ? (
+						<div className="contentsLeft">
+							<SearchBox />
+							{userInfo.friendsList && userInfo.friendsList.length !== 0 ? (
+								<FriendsList openChat={openChat} SERVER={SERVER} userInfo={userInfo} />
+							) : (
+								''
+							)}
+							<NoList
+								SERVER={SERVER}
+								userInfo={userInfo}
+								setUserInfo={setUserInfo}
+								openAddFriends={openAddFriends}
+								closeNotice={openNotice}
+							/>
+						</div>
+					) : (
+						<div className="contentLeft">
+							<SearchBox />
+							{userInfo.chatList && userInfo.chatList.length !== 0 ? (
+								<ChatList SERVER={SERVER} userInfo={userInfo} openChat={openChat} />
+							) : (
+								''
+							)}
+						</div>
+					)}
 					<div className="contentsRight">
 						<div className="randomChatContainer">
 							<div className="randomChatSwitch">
@@ -262,6 +300,8 @@ const MainPage = ({ SERVER }) => {
 									<div className={`randomChatButton ${userInfo.useRandomChatting ? 'clicked' : ''}`}> </div>
 								</div>
 							</div>
+							{userInfo.useRandomChatting ? <TagContainer editTags={openEditTags} tags={userInfo.tags} /> : ''}
+							{userInfo.useRandomChatting ? <RandomChattingLists /> : ''}
 						</div>
 					</div>
 				</div>
@@ -278,17 +318,11 @@ const MainPage = ({ SERVER }) => {
 				''
 			)}
 			{chat.active ? (
-				<Chat
-					newMessage={newMessage}
-					setNewMessage={setNewMessage}
-					SERVER={SERVER}
-					socket={socketRef.current}
-					chat={chat}
-					openChat={openChat}
-				/>
+				<Chat SERVER={SERVER} socket={socketRef.current} chat={chat} openChat={openChat} setRecentChatList={setRecentChatList} />
 			) : (
 				''
 			)}
+			{editTags ? <EditTags socket={socket} updateTags={updateTags} tags={userInfo.tags} editTags={openEditTags} /> : ''}
 		</div>
 	);
 };

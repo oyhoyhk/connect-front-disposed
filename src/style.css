@@ -680,8 +680,59 @@ body {
         background: #8991ff;
         color: white;
         cursor: pointer; }
+  .mainPage .chatListContainer {
+    width: 400px;
+    border-radius: 12px;
+    max-height: 550px;
+    margin-bottom: 10px;
+    overflow: auto; }
+    .mainPage .chatListContainer .chatList {
+      width: 375px;
+      border: 3px solid #8991ff;
+      border-radius: 10px;
+      height: 60px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: #8991ff; }
+      .mainPage .chatListContainer .chatList .profileImage {
+        width: 45px;
+        height: 45px;
+        background-size: 100% 100%;
+        border-radius: 12px;
+        border: 2px solid #8991ff; }
+      .mainPage .chatListContainer .chatList .name {
+        width: 80px;
+        height: 80%;
+        border-radius: 12px;
+        border: 2px solid #8991ff;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+      .mainPage .chatListContainer .chatList .lastMsg {
+        width: 180px;
+        height: 80%;
+        border-radius: 12px;
+        border: 2px solid #ffce2e;
+        display: flex;
+        padding-left: 10px;
+        justify-content: flex-start;
+        align-items: center;
+        background: #ffffb9; }
+      .mainPage .chatListContainer .chatList .chatButton {
+        width: 50px;
+        height: 60%;
+        border-radius: 12px;
+        border: 2px solid #8991ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #8991ff;
+        color: white;
+        cursor: pointer; }
   .mainPage .searchBox {
-    width: 100%;
+    width: 375px;
     height: 45px;
     margin-bottom: 10px; }
     .mainPage .searchBox input {
@@ -711,9 +762,71 @@ body {
       background: url("./img/addButton.png");
       background-size: 100% 100%;
       cursor: pointer; }
+  .mainPage .randomChattingLists {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; }
+    .mainPage .randomChattingLists .title {
+      width: 43%;
+      height: 33px;
+      background: #8991ff;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      margin-bottom: 20px; }
+    .mainPage .randomChattingLists .refreshButton {
+      width: 25px;
+      height: 25px;
+      background-image: url("./img/refresh.png");
+      background-size: 80% 80%;
+      background-repeat: no-repeat;
+      background-position: center center;
+      position: absolute;
+      right: 10px;
+      top: 20px;
+      cursor: pointer; }
+    .mainPage .randomChattingLists .lists {
+      width: 100%;
+      border: 3px solid #8991ff;
+      border-radius: 12px;
+      height: 400px; }
   .mainPage .randomChatContainer {
     width: 100%;
     height: 400px; }
+    .mainPage .randomChatContainer .tagContainer {
+      width: 100%;
+      border: 3px solid #8991ff;
+      border-radius: 12px;
+      padding: 5px;
+      min-height: 80px;
+      max-height: 400px;
+      margin-bottom: 50px;
+      position: relative; }
+      .mainPage .randomChatContainer .tagContainer .tag {
+        display: inline-block;
+        background: #8991ff;
+        color: white;
+        margin: 3px;
+        padding: 5px 10px;
+        border-radius: 12px;
+        cursor: pointer; }
+      .mainPage .randomChatContainer .tagContainer .edit {
+        position: absolute;
+        right: 5px;
+        top: -35px;
+        background: #8991ff;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: .8rem; }
     .mainPage .randomChatContainer .randomChatSwitch {
       width: 100%;
       height: 60px;
@@ -721,7 +834,8 @@ body {
       justify-content: space-around;
       align-items: center;
       border: 3px solid #8991ff;
-      border-radius: 12px; }
+      border-radius: 12px;
+      margin-bottom: 50px; }
     .mainPage .randomChatContainer .text {
       color: #8991ff;
       font-size: 1.15rem;
@@ -1083,3 +1197,84 @@ body {
           color: #8991ff;
           font-weight: bold;
           cursor: pointer; }
+  .mainPage .editTagsBackground {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .mainPage .editTagsBackground .editTags {
+      width: 500px;
+      height: 400px;
+      padding: 30px 0;
+      background: white;
+      border-radius: 20px;
+      border: 7px solid #8991ff;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column; }
+      .mainPage .editTagsBackground .editTags .tagInput {
+        outline: none;
+        border: none;
+        font-size: 1.3rem;
+        border-bottom: 3px solid #8991ff;
+        margin-top: 20px;
+        margin-bottom: 50px;
+        padding: 10px 0px 10px 0px;
+        text-align: center;
+        color: #8991ff;
+        width: 130px; }
+      .mainPage .editTagsBackground .editTags .tagInput::placeholder {
+        color: #b8d1ff; }
+      .mainPage .editTagsBackground .editTags .tagLists::-webkit-scrollbar-thumb {
+        background: #8991ff;
+        border-radius: 10px; }
+      .mainPage .editTagsBackground .editTags .tagLists::-webkit-scrollbar-track {
+        background: #ebeeff;
+        border-radius: 100%; }
+      .mainPage .editTagsBackground .editTags .tagLists::-webkit-scrollbar {
+        width: 5px;
+        border-radius: 100%; }
+      .mainPage .editTagsBackground .editTags .tagLists {
+        min-height: 15%;
+        max-height: 50%;
+        width: 70%;
+        border: 3px solid #8991ff;
+        border-radius: 12px;
+        background: #ebeeff;
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        overflow: auto; }
+        .mainPage .editTagsBackground .editTags .tagLists .tag {
+          background: #8991ff;
+          padding: 5px 7px 5px 10px;
+          border-radius: 12px;
+          color: white;
+          margin: 5px;
+          display: flex;
+          align-items: center; }
+          .mainPage .editTagsBackground .editTags .tagLists .tag .delete {
+            margin-left: 5px;
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+            position: relative;
+            background-image: url("./img/deleteButtonWhite.png");
+            background-size: 100% 100%; }
+      .mainPage .editTagsBackground .editTags .close {
+        width: 70px;
+        height: 40px;
+        outline: none;
+        background: #8991ff;
+        border-radius: 12px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: bold; }

@@ -189,7 +189,7 @@ const SignUp = ({ SERVER, signUpPage, openSignUpPage, openConfirmWindow, setting
 			formData.append('password', userInfo.password);
 			formData.append('email', userInfo.email);
 			formData.append('useRandomChatting', userInfo.useRandomChatting);
-			formData.append('tags', userInfo.rcTag.join(','));
+			formData.append('tags', userInfo.rcTag.join('@$@$'));
 			formData.append('statusMessage', userInfo.statusMessage);
 			formData.append('profileImage', userInfo.profileImage);
 			formData.append('randomProfileImage', userInfo.randomProfileImage);

@@ -24,8 +24,7 @@ const SendedMessage = ({ msg, time, getTime }) => {
 	);
 };
 
-const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => {
-	console.log('newMessage', newMessage);
+const Chat = ({ socket, chat, SERVER, openChat, setRecentChatList }) => {
 	const inputBox = useRef();
 	const inputContainer = useRef();
 	const chatContainer = useRef();
@@ -33,14 +32,11 @@ const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => 
 	const [beforeLine, setBeforeLine] = useState([0]);
 	const [logs, setLogs] = useState(null);
 	const logsRef = useRef(logs);
-	const [send, setSend] = useState(false);
 	useEffect(() => {
 		setLines(inputBox.current.scrollHeight);
-		console.log(sessionStorage.uid, chat.otherPerson.uid);
 		axios
 			.post(`${SERVER}/get_msgs`, { sender: Number(sessionStorage.uid), receiver: chat.otherPerson.uid })
 			.then(res => {
-				console.log(res.data);
 				setLogs([...res.data]);
 				logsRef.current = adjustChatContainer();
 			})
@@ -66,7 +62,6 @@ const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => 
 		return `${str} ${hour}시 ${min}분`;
 	};
 	const adjustChatContainer = () => {
-		console.dir(chatContainer.current);
 		chatContainer.current.scrollTop = chatContainer.current.scrollHeight + 90;
 	};
 	const adjustInputBox = e => {
@@ -91,7 +86,9 @@ const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => 
 		const msg = inputBox.current.value;
 		if (msg === '') return;
 		inputBox.current.value = '';
-		socket.emit('send_message', msg, sessionStorage.uid, chat.otherPerson.uid);
+		socket.emit('send_message', msg, sessionStorage.uid, chat.otherPerson.uid, res => {
+			setRecentChatList(res.result);
+		});
 		new Promise((resolve, reject) => {
 			setLogs(logs => {
 				return [...logs, { sender: Number(sessionStorage.uid), receiver: chat.otherPerson.uid, msg, time: new Date().toString() }];
@@ -106,7 +103,9 @@ const Chat = ({ newMessage, setNewMessage, socket, chat, SERVER, openChat }) => 
 			const msg = inputBox.current.value;
 			if (msg === '') return;
 			inputBox.current.value = '';
-			socket.emit('send_message', msg, sessionStorage.uid, chat.otherPerson.uid);
+			socket.emit('send_message', msg, sessionStorage.uid, chat.otherPerson.uid, res => {
+				setRecentChatList(res.result);
+			});
 			new Promise((resolve, reject) => {
 				setLogs(logs => {
 					return [

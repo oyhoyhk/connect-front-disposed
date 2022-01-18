@@ -779,6 +779,7 @@ body {
             .contentsRight {
                 width: 40%;
                 height: 90%;
+
             }
         }
     }
@@ -857,8 +858,65 @@ body {
             }
         }
     }
+    .chatListContainer{
+        width: 400px;
+        border-radius:12px;
+        max-height:550px;
+        margin-bottom:10px;
+        overflow:auto;
+        .chatList{
+            width:375px;
+            border:3px solid $c-color;
+            border-radius:10px;
+            height:60px;
+            margin-bottom:10px;
+            display:flex;
+            justify-content:space-around;
+            align-items:center;
+            color:$c-color;
+            .profileImage{
+                width:45px;
+                height:45px;
+                background-size:100% 100%;
+                border-radius:12px;
+                border:2px solid $c-color;
+            }
+            .name{
+                width:80px;
+                height:80%;
+                border-radius:12px;
+                border: 2px solid $c-color;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+            }
+            .lastMsg{
+                width:180px;
+                height:80%;
+                border-radius:12px;
+                border:2px solid rgb(255, 206, 46);
+                display:flex;
+                padding-left:10px;
+                justify-content:flex-start;
+                align-items:center;
+                background:rgb(255, 255, 185);
+            }
+            .chatButton{
+                width:50px;
+                height:60%;
+                border-radius:12px;
+                border:2px solid $c-color;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                background:$c-color;
+                color:white;
+                cursor:pointer;
+            }
+       }
+    }
     .searchBox {
-        width: 100%;
+        width: 375px;
         height: 45px;
         margin-bottom: 10px;
 
@@ -898,10 +956,78 @@ body {
         }
     }
 
+    .randomChattingLists{
+        width:100%;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        position:relative;
+        .title{
+            width:43%;
+            height:33px;
+            background:$c-color;
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            border-radius:20px;
+            margin-bottom:20px;
+        }
+        .refreshButton{
+            width:25px;
+            height:25px;
+            background-image:url('./img/refresh.png');
+            background-size:80% 80%;
+            background-repeat:no-repeat;
+            background-position:center center;
+            position:absolute;
+            right:10px;
+            top:20px;
+            cursor:pointer;
+        }
+        .lists{
+            width:100%;
+            border:3px solid $c-color;
+            border-radius:12px;
+            height:400px;
+        }
+    }
     .randomChatContainer {
         width: 100%;
         height: 400px;
-
+        .tagContainer{
+            width:100%;
+            border:3px solid $c-color;
+            border-radius:12px;
+            padding:5px;
+            min-height:80px;
+            max-height:400px;
+            margin-bottom:50px;
+            position:relative;
+            .tag{
+                display:inline-block;
+                background:$c-color;
+                color:white;
+                margin:3px;
+                padding:5px 10px;
+                border-radius:12px;
+                cursor:pointer;
+            }
+            .edit{
+                position:absolute;
+                right:5px;
+                top:-35px;
+                background:$c-color;
+                color:white;
+                cursor:pointer;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                padding:4px 10px;
+                border-radius:12px;
+                font-size:.8rem;
+            }
+        }
         .randomChatSwitch {
             width: 100%;
             height: 60px;
@@ -910,6 +1036,7 @@ body {
             align-items: center;
             border: 3px solid $c-color;
             border-radius: 12px;
+            margin-bottom:50px;
         }
 
         .text {
@@ -1345,6 +1472,98 @@ body {
                     font-weight:bold;
                     cursor:pointer;
                 }
+            }
+        }
+    }
+    .editTagsBackground{
+        width:100vw;
+        height:100vh;
+        background:rgba(0,0,0,.5);
+        position:absolute;
+        left:0;
+        top:0;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        .editTags{
+            width:500px;
+            height:400px;
+            padding:30px 0;
+            background:white;
+            border-radius:20px;
+            border:7px solid $c-color;
+            display:flex;
+            justify-content:flex-start;
+            align-items:center;
+            flex-direction: column;
+            .tagInput{
+                outline:none;
+                border:none;
+                font-size:1.3rem;
+                border-bottom:3px solid $c-color;
+                margin-top:20px;
+                margin-bottom:50px;
+                padding:10px 0px 10px 0px;
+                text-align:center;
+                color:$c-color;
+                width:130px;
+            }
+            .tagInput::placeholder{
+                color:$s-color;
+            }
+            .tagLists::-webkit-scrollbar-thumb{
+                background:$c-color;
+                border-radius:10px;
+            }
+            .tagLists::-webkit-scrollbar-track{
+                background:$b-color;
+                border-radius:100%;
+            }
+            .tagLists::-webkit-scrollbar{
+                width:5px;
+                border-radius:100%;
+            }
+            .tagLists{
+                min-height:15%;
+                max-height:50%;                
+                width:70%;
+                border:3px solid $c-color;
+                border-radius:12px;
+                background:$b-color;
+                margin-bottom:20px;
+                display:flex;
+                flex-wrap:wrap;
+                padding:10px;
+                overflow:auto;
+                .tag{
+                    background: $c-color;
+                    padding:5px 7px 5px 10px;
+                    border-radius:12px;
+                    color:white;
+                    margin:5px;
+                    display:flex;
+                    align-items:center;
+                    .delete{
+                        margin-left:5px;
+                        width:17px;
+                        height:17px;
+                        cursor:pointer;
+                        position:relative;
+                        background-image:url('./img/deleteButtonWhite.png');
+                        background-size:100% 100%;
+                    }
+                }
+            }
+            .close{
+                width:70px;
+                height:40px;
+                outline:none;
+                background:$c-color;
+                border-radius:12px;
+                color:white;
+                border:none;
+                cursor:pointer;
+                font-weight:bold;
             }
         }
     }
